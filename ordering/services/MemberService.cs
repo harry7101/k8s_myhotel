@@ -1,4 +1,4 @@
-﻿using common.libs;
+﻿
 using Newtonsoft.Json;
 using ordering.aop;
 using ordering.models;
@@ -12,23 +12,18 @@ namespace ordering.services
 {
     public class MemberService : IMemberService
     {
-        private IConsulService _consulservice;
+     
 
-        public MemberService(IConsulService consulService)
-        {
-            _consulservice = consulService;
-        }
 
         [PollyHandle(IsCircuitBreaker = true, FallbackMethod = "GetMemberInfoFallback", ExceptionsAllowedBeforeBreaking = 5, SecondsOfBreak = 30, RetryTimes = 3)]
         public async Task<MemberVM> GetMemberInfo(string id)
         {
-            var memberServiceAddresses = await _consulservice.GetServicesAsync("member_center");
-            var memberServiceAddress = memberServiceAddresses.FirstOrDefault();
+        
 
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress =
-                    new Uri($"http://{memberServiceAddress.Address}:{memberServiceAddress.Port}");
+                    new Uri($"http://member_center");
                 var result = await httpClient.GetAsync("/member/" + id);
                 result.EnsureSuccessStatusCode();
                 var json = await result.Content.ReadAsStringAsync();

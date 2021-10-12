@@ -1,4 +1,4 @@
-﻿using common.libs;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -22,11 +22,11 @@ namespace ordering.Controllers
     {
 
         private readonly ILogger<OrderController> _logger;
-        private IConsulService _consulservice;
+
         private IMemberService _memberService;
-        public OrderController(ILogger<OrderController> logger, IConsulService consulService, IMemberService memberService)
+        public OrderController(ILogger<OrderController> logger, IMemberService memberService)
         {
-            _consulservice = consulService;
+  
             _logger = logger;
             _memberService = memberService;
         }
