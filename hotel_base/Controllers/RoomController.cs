@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Serilog.Sinks;
 namespace hotel_base.Controllers
 {
     [ApiController]
@@ -61,6 +61,7 @@ namespace hotel_base.Controllers
         [HttpGet]
         public IEnumerable<RoomVM> Get()
         {
+            _logger.LogInformation("gettime:"+DateTime.Now.ToString());
             return _rooms;
         }
 
