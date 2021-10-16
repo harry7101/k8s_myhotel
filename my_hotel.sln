@@ -13,10 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hotel_base", "hotel_base\ho
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ACA99308-1DA7-4AD0-8231-E880336E1375}"
 	ProjectSection(SolutionItems) = preProject
+		D:\work\elk\apm-server.docker.yml = D:\work\elk\apm-server.docker.yml
+		D:\work\elk\apm.yaml = D:\work\elk\apm.yaml
 		docker-compose.yml = docker-compose.yml
+		D:\work\elk\elk.yaml = D:\work\elk\elk.yaml
 		hotel.yaml = hotel.yaml
 		member.yaml = member.yaml
 		order.yaml = order.yaml
+		D:\work\elk\readme.txt = D:\work\elk\readme.txt
 	EndProjectSection
 EndProject
 Global
