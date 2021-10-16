@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: member
+  namespace: default
+  labels:
+    name: member
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: member
+  template:
+    metadata:
+      labels:
+        name: member
+    spec:
+      containers:
+      - name: member
+        image: 937275189/member:v1
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: member
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    name: member

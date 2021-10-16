@@ -33,8 +33,8 @@ namespace member_center.Controllers
         [HttpGet("{id}")]
         public MemberVM Get(string id)
         {
-           // throw new Exception("This api is mock fail .");
-
+            // throw new Exception("This api is mock fail .");
+            _logger.LogInformation("memberId:" + id);
             return _members.FirstOrDefault(x => x.Id == id);
         }
     }

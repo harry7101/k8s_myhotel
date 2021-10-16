@@ -23,7 +23,7 @@ namespace ordering.services
             using (var httpClient = new HttpClient())
             {
                 httpClient.BaseAddress =
-                    new Uri($"http://member_center");
+                    new Uri($"http://member");
                 var result = await httpClient.GetAsync("/member/" + id);
                 result.EnsureSuccessStatusCode();
                 var json = await result.Content.ReadAsStringAsync();

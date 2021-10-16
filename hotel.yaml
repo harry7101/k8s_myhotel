@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotel
+  namespace: default
+  labels:
+    name: hotel
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: hotel
+  template:
+    metadata:
+      labels:
+        name: hotel
+    spec:
+      containers:
+      - name: hotel
+        image: 937275189/hotel:log1
+        ports:
+        - containerPort: 6003
+        imagePullPolicy: Always
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: hotel
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 6003
+      targetPort: 6003
+  selector:
+    name: hotel

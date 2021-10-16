@@ -76,5 +76,22 @@ namespace hotel_base.Controllers
         {
             return _rooms.Where(x => x.HotelId == hotelId).ToList();
         }
+
+
+        [HttpPost("add")]
+        public RoomVM Add(RoomVM entity)
+        {
+            
+            return entity;
+        }
+
+        [HttpGet]
+
+        [Route("room/save")]
+        public string Test()
+        {
+
+            return "d";
+        }
     }
 }

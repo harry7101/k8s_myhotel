@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order
+  namespace: default
+  labels:
+    name: order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: order
+  template:
+    metadata:
+      labels:
+        name: order
+    spec:
+      containers:
+      - name: order
+        image: 937275189/order:v2
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: order
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    name: order

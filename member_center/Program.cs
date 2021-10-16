@@ -16,23 +16,10 @@ namespace member_center
     {
         public static void Main(string[] args)
         {
-            var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
-            try
-            {
-                logger.Debug("app init main");
+           
                 CreateHostBuilder(args).Build().Run();
-            }
-            catch (Exception exception)
-            {
-                //NLog: catch setup errors
-                logger.Error(exception, "Stopped program because of exception");
-                throw;
-            }
-            finally
-            {
-                // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
-                NLog.LogManager.Shutdown();
-            }
+            
+        
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -43,23 +30,9 @@ namespace member_center
                         var localconfig = new ConfigurationBuilder()
                                     .SetBasePath(Directory.GetCurrentDirectory())
                                     .AddJsonFile("appsettings.json").AddEnvironmentVariables().Build();
-                        var consul_server = localconfig["consul_server"];
-
-                        cfg.AddConsul("text", op =>
-                        {
-                            op.ConsulConfigurationOptions = cco =>
-                            {
-                                cco.Address = new Uri(consul_server);
-
-                            };
-                            op.ReloadOnChange = true;
-          
-                        });
+                    
                     });
-                    webBuilder.ConfigureKestrel(options =>
-                    {
-                        options.ListenAnyIP(6002);
-                    });
+               
                     webBuilder.UseStartup<Startup>();
                 });
     }
