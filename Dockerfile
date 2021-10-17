@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["ordering/ordering.csproj", "ordering/"]
-RUN dotnet restore "ordering/ordering.csproj"
+COPY ["hotel_base/hotel_base.csproj", "hotel_base/"]
+RUN dotnet restore "hotel_base/hotel_base.csproj"
 COPY . .
-WORKDIR "/src/ordering"
-RUN dotnet build "ordering.csproj" -c Release -o /app/build
+WORKDIR "/src/hotel_base"
+RUN dotnet build "hotel_base.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ordering.csproj" -c Release -o /app/publish
+RUN dotnet publish "hotel_base.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ordering.dll"]
+ENTRYPOINT ["dotnet", "hotel_base.dll"]

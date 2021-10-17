@@ -37,6 +37,12 @@ namespace member_center
                     FailureSink = new FileSink("./failures.txt", new JsonFormatter(), null)
                 }).WriteTo.Console()
                 .CreateLogger();
+
+
+              
+              
+
+
         }
 
         public IConfiguration Configuration { get; }

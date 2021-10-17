@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		D:\work\elk\readme.txt = D:\work\elk\readme.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "receviceRabbitMq", "receviceRabbitMq\receviceRabbitMq.csproj", "{054F375D-7EBD-4339-8999-7A84356BB74C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{BB87A844-AA35-4235-B4BE-B6038F4975D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB87A844-AA35-4235-B4BE-B6038F4975D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB87A844-AA35-4235-B4BE-B6038F4975D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{054F375D-7EBD-4339-8999-7A84356BB74C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{054F375D-7EBD-4339-8999-7A84356BB74C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{054F375D-7EBD-4339-8999-7A84356BB74C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{054F375D-7EBD-4339-8999-7A84356BB74C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +55,7 @@ Global
 		{B2971273-1FC8-4072-93E1-A278FA56B074} = {5C0C1155-AB2C-458A-8524-EDA4A89B2093}
 		{D4BF84A2-CD5B-46AA-B236-03085CC5270E} = {5C0C1155-AB2C-458A-8524-EDA4A89B2093}
 		{BB87A844-AA35-4235-B4BE-B6038F4975D8} = {5C0C1155-AB2C-458A-8524-EDA4A89B2093}
+		{054F375D-7EBD-4339-8999-7A84356BB74C} = {5C0C1155-AB2C-458A-8524-EDA4A89B2093}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1FD3644A-A58A-4FAA-9DA2-854D45E27D7E}

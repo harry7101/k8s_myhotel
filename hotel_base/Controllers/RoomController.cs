@@ -6,6 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog.Sinks;
+using Microsoft.Extensions.Configuration;
+using StackExchange.Redis;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+
 namespace hotel_base.Controllers
 {
     [ApiController]
@@ -52,10 +58,11 @@ namespace hotel_base.Controllers
         };
 
         private readonly ILogger<RoomController> _logger;
-
-        public RoomController(ILogger<RoomController> logger)
+        private readonly IConfiguration _configuration;
+        public RoomController(ILogger<RoomController> logger, IConfiguration configuration)
         {
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -78,20 +85,59 @@ namespace hotel_base.Controllers
         }
 
 
-        [HttpPost("add")]
-        public RoomVM Add(RoomVM entity)
+        [HttpGet("getroom")]
+        public string GetRoomId(string Id)
         {
-            
-            return entity;
+            try
+            {
+                RoomVM entity = new RoomVM() { Id = Id, HotelId = Id };
+                var cstring = _configuration["Redis:Configuration"];
+
+                using (var cache = ConnectionMultiplexer.Connect(cstring))
+                {
+                    IDatabase db = cache.GetDatabase();
+                    bool setValue = db.HashSet("addroom", entity.Id, entity.HotelId);
+
+                }
+
+                var factory = new ConnectionFactory();
+                factory.HostName = "rabbitmq-cluster";//主机名，Rabbit会拿这个IP生成一个endpoint，这个很熟悉吧，就是socket绑定的那个终结点。
+                factory.UserName = "admin";//默认用户名,用户可以在服务端自定义创建，有相关命令行
+                factory.Password = "admin";//默认密码
+                factory.Port = 5672;
+                using (var connection = factory.CreateConnection())//连接服务器，即正在创建终结点。
+                {
+                    //创建一个通道，这个就是Rabbit自己定义的规则了，如果自己写消息队列，这个就可以开脑洞设计了
+                    //这里Rabbit的玩法就是一个通道channel下包含多个队列Queue
+                    using (var channel = connection.CreateModel())
+                    {
+
+
+
+
+
+
+                        channel.ExchangeDeclare("exchangeName", ExchangeType.Direct);
+                        channel.QueueDeclare("redis", false, false, false, null);
+                        channel.QueueBind("redis", "exchangeName", "addroom", null);
+                        var properties = channel.CreateBasicProperties();
+                        properties.DeliveryMode = 1;
+                        string message = $"Id:{entity.Id}"; //传递的消息内容
+                        channel.BasicPublish("exchangeName", "addroom", properties, Encoding.UTF8.GetBytes(message));
+
+
+
+                    }
+                }
+
+                return Id;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation($"getroom:{ex.Message}");
+                return ex.Message;
+            }
         }
 
-        [HttpGet]
-
-        [Route("room/save")]
-        public string Test()
-        {
-
-            return "d";
-        }
     }
 }

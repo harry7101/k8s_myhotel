@@ -24,6 +24,8 @@ namespace member_center.Controllers
             _logger = logger;
         }
 
+
+
         [HttpGet]
         public IEnumerable<MemberVM> Get()
         {
